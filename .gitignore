@@ -10,6 +10,7 @@ env
 data
 *.DS_Store
 twitter.txt
+poppler
 
 # Local Netlify folder
 .netlify

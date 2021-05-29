@@ -3,7 +3,10 @@ feedparser
 numpy
 scipy
 
-# pdftotext is for generating abstracts
+# pdftotext is for generating abstracts 
+python3.7-dev
+python-poppler
+poppler-utils
 pdftotext
 
 # sciki-learn is only for sparse arrays
