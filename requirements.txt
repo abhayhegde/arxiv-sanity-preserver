@@ -3,6 +3,9 @@ feedparser
 numpy
 scipy
 
+# pdftotext is for generating abstracts
+pdftotext
+
 # sciki-learn is only for sparse arrays
 scikit-learn
 

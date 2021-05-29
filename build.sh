@@ -1,6 +1,5 @@
 #!/bin/bash
-sudo apt-get install python3.8
-sudo apt-get install imagemagick poppler-utils pdftotext
+python -m venv env/
 pip install -r requirements.txt
 python fetch_papers.py
 python download_pdfs.py
