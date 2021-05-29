@@ -10,3 +10,6 @@ env/
 data
 *.DS_Store
 twitter.txt
+
+# Local Netlify folder
+.netlify
