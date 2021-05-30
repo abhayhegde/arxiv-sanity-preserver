@@ -3,6 +3,7 @@ feedparser
 numpy
 scipy
 gunicorn==20.0.4
+pdf2images
 
 # sciki-learn is only for sparse arrays
 scikit-learn

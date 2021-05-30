@@ -3,3 +3,5 @@ libpoppler-cpp-dev
 pkg-config 
 poppler-utils
 mongodb
+sqlite3
+
