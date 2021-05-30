@@ -1,2 +1,2 @@
 release: bash build.sh
-web: gunicorn app:app
+web: python serve.py --prod --port 80
