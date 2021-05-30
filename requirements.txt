@@ -4,6 +4,7 @@ numpy
 scipy
 gunicorn==20.0.4
 pdf2images
+exiftool
 
 # sciki-learn is only for sparse arrays
 scikit-learn
