@@ -4,4 +4,6 @@ pkg-config
 poppler-utils
 mongodb
 sqlite3
-
+qpdf 
+xpdf 
+libimage-exiftool-perl
