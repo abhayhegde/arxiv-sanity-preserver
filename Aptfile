@@ -1,7 +1,6 @@
 build-essential 
 libpoppler-cpp-dev 
 poppler-utils
-mongodb
 sqlite3
 qpdf 
 libimage-exiftool-perl
