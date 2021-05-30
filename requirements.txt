@@ -1,10 +1,10 @@
 # feedparser is only if you want to scrape arxiv
+exiftool
 feedparser
 numpy
 scipy
 gunicorn==20.0.4
 pdf2images
-exiftool
 
 # sciki-learn is only for sparse arrays
 scikit-learn
