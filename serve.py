@@ -677,7 +677,7 @@ if __name__ == "__main__":
   SEARCH_DICT = cache['search_dict']
 
   print('connecting to mongodb...')
-  client = pymongo.MongoClient()
+  client = pymongo.MongoClient("mongodb+srv://herokumongodb:BfhdD78aCMsCX3kS@cluster0.b3uuf.mongodb.net/arxivPapers?retryWrites=true&w=majority")
   mdb = client.arxiv
   tweets_top1 = mdb.tweets_top1
   tweets_top7 = mdb.tweets_top7
