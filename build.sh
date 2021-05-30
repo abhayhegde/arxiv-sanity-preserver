@@ -10,4 +10,4 @@ python pdf_thumbs.py
 python analyze.py
 python buildsvm.py
 python make_cache.py
-python serve --prod --port 80
+python serve --prod
