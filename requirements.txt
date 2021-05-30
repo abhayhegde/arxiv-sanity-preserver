@@ -1,5 +1,4 @@
 # feedparser is only if you want to scrape arxiv
-exiftool
 feedparser
 numpy
 scipy
