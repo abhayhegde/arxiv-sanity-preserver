@@ -10,5 +10,4 @@ python pdf_thumbs.py
 python analyze.py
 python buildsvm.py
 python make_cache.py
-sudo service mongod start
 python serve.py --prod --port 80
