@@ -16,5 +16,5 @@ pytz
 python-dateutil
 flask
 flask_limiter
-tornado
 pymongo
+tornado
