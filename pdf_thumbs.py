@@ -30,7 +30,7 @@ for i,p in enumerate(pdf_files):
   print("%d/%d processing %s" % (i, len(pdf_files), p))
 
   try:
-      images = convert_from_path(pdf_path, dpi=200, last_page=4, fmt="jpeg", output_file="thumbs", output_folder=os.path.join(Config.tmp_dir), size=(312, None))
+      images = convert_from_path(pdf_path, dpi=200, last_page=4, fmt="jpeg", output_file="thumbs", output_folder=os.path.join(Config.tmp_dir), size=(None, 312))
       tmp_thumb = os.path.join(Config.tmp_dir, '*.jpg')
       cmd = "montage -mode concatenate -quality 80 -tile x1 %s %s" % (tmp_thumb, thumb_path)
       # print(cmd)

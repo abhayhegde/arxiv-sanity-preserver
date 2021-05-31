@@ -20,6 +20,19 @@ from utils import safe_pickle_dump, strip_version, isvalidid, Config
 # various globals
 # -----------------------------------------------------------------------------
 
+#------------------------------------------
+# fetch papers
+os.system('sqlite3 as.db < schema.sql')
+os.system('python fetch_papers.py')
+os.system('python fetch_papers.py')
+os.system('python download_pdfs.py')
+os.system('python parse_pdf_to_text.py')
+os.system('python pdf_thumbs.py')
+os.system('python analyze.py')
+os.system('python buildsvm.py')
+os.system('python make_cache.py')
+#------------------------------------------
+
 # database configuration
 if os.path.isfile('secret_key.txt'):
   SECRET_KEY = open('secret_key.txt', 'r').read()
@@ -184,7 +197,7 @@ def encode_json(ps, n=10, send_images=True, send_abstracts=True):
     if send_abstracts:
       struct['abstract'] = p['summary']
     if send_images:
-      struct['img'] = '/static/thumbs/' + idvv + '.pdf.jpg'
+      struct['img'] = '/static/thumbs/' + idvv + '.pdf.jpeg'
     struct['tags'] = [t['term'] for t in p['tags']]
     
     # render time information nicely
@@ -645,7 +658,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument('-p', '--prod', dest='prod', action='store_true', help='run in prod?')
   parser.add_argument('-r', '--num_results', dest='num_results', type=int, default=200, help='number of results to return per query')
-  parser.add_argument('--port', dest='port', type=int, default=33507, help='port to serve on')
+  parser.add_argument('--port', dest='port', type=int, default=5000, help='port to serve on')
   args = parser.parse_args()
   print(args)
 
@@ -678,14 +691,14 @@ if __name__ == "__main__":
 
   print('connecting to mongodb...')
   client = pymongo.MongoClient("mongodb+srv://herokumongodb:BfhdD78aCMsCX3kS@cluster0.b3uuf.mongodb.net/arxivPapers?retryWrites=true&w=majority")
-  mdb = client.arxiv
-  tweets_top1 = mdb.tweets_top1
-  tweets_top7 = mdb.tweets_top7
-  tweets_top30 = mdb.tweets_top30
-  comments = mdb.comments
-  tags_collection = mdb.tags
-  goaway_collection = mdb.goaway
-  follow_collection = mdb.follow
+  db = client.arxiv
+  tweets_top1 = db.tweets_top1
+  tweets_top7 = db.tweets_top7
+  tweets_top30 = db.tweets_top30
+  comments = db.comments
+  tags_collection = db.tags
+  goaway_collection = db.goaway
+  follow_collection = db.follow
   print('mongodb tweets_top1 collection size:', tweets_top1.count())
   print('mongodb tweets_top7 collection size:', tweets_top7.count())
   print('mongodb tweets_top30 collection size:', tweets_top30.count())
@@ -695,6 +708,7 @@ if __name__ == "__main__":
   print('mongodb follow collection size:', follow_collection.count())
   
   TAGS = ['insightful!', 'thank you', 'agree', 'disagree', 'not constructive', 'troll', 'spam']
+  heroku_port = int(os.getenv('PORT', args.port))
 
   # start
   if args.prod:
@@ -706,9 +720,9 @@ if __name__ == "__main__":
     from tornado.log import enable_pretty_logging
     enable_pretty_logging()
     http_server = HTTPServer(WSGIContainer(app))
-    http_server.listen(args.port)
+    http_server.listen(heroku_port)
     IOLoop.instance().start()
   else:
     print('starting flask!')
     app.debug = False
-    app.run(port=args.port, host='0.0.0.0')
+    app.run(port=heroku_port, host='0.0.0.0')
