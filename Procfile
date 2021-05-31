@@ -1,1 +1,1 @@
-worker: python serve.py --prod --port 27017
+web: python serve.py --prod --port ${PORT}
