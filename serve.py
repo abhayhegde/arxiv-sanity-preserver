@@ -40,6 +40,7 @@ os.system('python pdf_thumbs.py')
 os.system('python analyze.py')
 os.system('python buildsvm.py')
 os.system('python make_cache.py')
+os.system('service mongod start')
 #------------------------------------------
 # -----------------------------------------------------------------------------
 # utilities for database interactions 
