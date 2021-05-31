@@ -20,6 +20,15 @@ from utils import safe_pickle_dump, strip_version, isvalidid, Config
 # various globals
 # -----------------------------------------------------------------------------
 
+# database configuration
+if os.path.isfile('secret_key.txt'):
+  SECRET_KEY = open('secret_key.txt', 'r').read()
+else:
+  SECRET_KEY = 'devkey, should be in a file'
+app = Flask(__name__)
+app.config.from_object(__name__)
+limiter = Limiter(app, global_limits=["100 per hour", "2000 per minute"])
+
 #------------------------------------------
 # fetch papers
 os.system('sqlite3 as.db < schema.sql')
@@ -32,16 +41,6 @@ os.system('python analyze.py')
 os.system('python buildsvm.py')
 os.system('python make_cache.py')
 #------------------------------------------
-
-# database configuration
-if os.path.isfile('secret_key.txt'):
-  SECRET_KEY = open('secret_key.txt', 'r').read()
-else:
-  SECRET_KEY = 'devkey, should be in a file'
-app = Flask(__name__)
-app.config.from_object(__name__)
-limiter = Limiter(app, global_limits=["100 per hour", "20 per minute"])
-
 # -----------------------------------------------------------------------------
 # utilities for database interactions 
 # -----------------------------------------------------------------------------
@@ -690,15 +689,15 @@ if __name__ == "__main__":
   SEARCH_DICT = cache['search_dict']
 
   print('connecting to mongodb...')
-  client = pymongo.MongoClient("mongodb+srv://herokumongodb:BfhdD78aCMsCX3kS@cluster0.b3uuf.mongodb.net/arxivPapers?retryWrites=true&w=majority")
-  db = client.arxiv
-  tweets_top1 = db.tweets_top1
-  tweets_top7 = db.tweets_top7
-  tweets_top30 = db.tweets_top30
-  comments = db.comments
-  tags_collection = db.tags
-  goaway_collection = db.goaway
-  follow_collection = db.follow
+  client = pymongo.MongoClient()
+  mdb = client.arxiv
+  tweets_top1 = mdb.tweets_top1
+  tweets_top7 = mdb.tweets_top7
+  tweets_top30 = mdb.tweets_top30
+  comments = mdb.comments
+  tags_collection = mdb.tags
+  goaway_collection = mdb.goaway
+  follow_collection = mdb.follow
   print('mongodb tweets_top1 collection size:', tweets_top1.count())
   print('mongodb tweets_top7 collection size:', tweets_top7.count())
   print('mongodb tweets_top30 collection size:', tweets_top30.count())
@@ -708,7 +707,6 @@ if __name__ == "__main__":
   print('mongodb follow collection size:', follow_collection.count())
   
   TAGS = ['insightful!', 'thank you', 'agree', 'disagree', 'not constructive', 'troll', 'spam']
-  heroku_port = int(os.getenv('PORT', args.port))
 
   # start
   if args.prod:
@@ -720,9 +718,9 @@ if __name__ == "__main__":
     from tornado.log import enable_pretty_logging
     enable_pretty_logging()
     http_server = HTTPServer(WSGIContainer(app))
-    http_server.listen(heroku_port)
+    http_server.listen(args.port)
     IOLoop.instance().start()
   else:
     print('starting flask!')
     app.debug = False
-    app.run(port=heroku_port, host='0.0.0.0')
+    app.run(port=args.port, host='0.0.0.0')
