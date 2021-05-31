@@ -40,7 +40,7 @@ os.system('python pdf_thumbs.py')
 os.system('python analyze.py')
 os.system('python buildsvm.py')
 os.system('python make_cache.py')
-os.system('service mongod start')
+# os.system('service mongod start')
 #------------------------------------------
 # -----------------------------------------------------------------------------
 # utilities for database interactions 
@@ -690,8 +690,9 @@ if __name__ == "__main__":
   SEARCH_DICT = cache['search_dict']
 
   print('connecting to mongodb...')
-  client = pymongo.MongoClient()
+  client = pymongo.MongoClient("mongodb+srv://testuser:test@cluster0.b3uuf.mongodb.net/students_db?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE")
   mdb = client.arxiv
+  print('connected...')
   tweets_top1 = mdb.tweets_top1
   tweets_top7 = mdb.tweets_top7
   tweets_top30 = mdb.tweets_top30

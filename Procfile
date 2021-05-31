@@ -1,1 +1,1 @@
-web: python serve.py --prod
+web: python serve.py --prod --port 27017
