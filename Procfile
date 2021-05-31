@@ -1,1 +1,1 @@
-web: python serve.py --prod --port ${PORT}
+web:python serve.py --prod --port ${PORT}
