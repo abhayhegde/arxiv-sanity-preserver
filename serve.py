@@ -709,7 +709,7 @@ if __name__ == "__main__":
   print('mongodb follow collection size:', follow_collection.count())
   
   TAGS = ['insightful!', 'thank you', 'agree', 'disagree', 'not constructive', 'troll', 'spam']
-
+  listen_port = int(os.environ.get("PORT", args.port))
   # start
   if args.prod:
     # run on Tornado instead, since running raw Flask in prod is not recommended
@@ -725,4 +725,4 @@ if __name__ == "__main__":
   else:
     print('starting flask!')
     app.debug = False
-    app.run(port=args.port, host='0.0.0.0')
+    app.run(port=listen_port, host='0.0.0.0')
